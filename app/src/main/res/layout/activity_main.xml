@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <!-- Landing Screen (Main IPTV Dashboard) -->
+    <LinearLayout
+        android:id="@+id/layout_landing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="visible">
+
+        <!-- Top Header Panel -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAVEL IPTV ENTERPRISE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="26sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05" />
+
+                <TextView
+                    android:id="@+id/text_app_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enterprise High-Performance TV Navigator"
+                    android:textColor="#888888"
+                    android:textSize="12sp"
+                    android:letterSpacing="0.1" />
+            </LinearLayout>
+
+            <!-- Status Indicator -->
+            <TextView
+                android:id="@+id/tv_active_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="#1557B0"
+                android:paddingLeft="12dp"
+                android:paddingTop="6dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="6dp"
+                android:text="Default Playlist Active"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="11sp" />
+        </RelativeLayout>
+
+        <!-- Playlist Picker & Custom URL Rows -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="#1A1A1A"
+            android:padding="8dp"
+            android:layout_marginBottom="12dp">
+
+            <!-- Custom URL Input -->
+            <EditText
+                android:id="@+id/edit_m3u_url"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="#2E2E2E"
+                android:hint="Enter remote M3U URL..."
+                android:textColorHint="#666666"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="12dp"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                android:focusable="true"/>
+
+            <Button
+                android:id="@+id/btn_load_custom"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="6dp"
+                android:background="@drawable/btn_selector"
+                android:text="LOAD LINK"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:focusable="true"/>
+
+            <!-- Separator -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="24dp"
+                android:background="#333333"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp" />
+
+            <!-- Local file upload button -->
+            <Button
+                android:id="@+id/btn_upload_file"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_selector"
+                android:text="📁 UPLOAD/OPEN FILE"
+                android:textColor="#FFFFFF"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:focusable="true"/>
+        </LinearLayout>
+
+        <!-- Sub-Header/Search row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SELECT STATION GROUP"
+                android:textColor="#888888"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_weight="0" />
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <!-- Interactive Search box -->
+            <EditText
+                android:id="@+id/edit_search_channel"
+                android:layout_width="280dp"
+                android:layout_height="36dp"
+                android:background="#1F1F1F"
+                android:hint="🔍  Search stations..."
+                android:textColorHint="#666666"
+                android:textColor="#FFFFFF"
+                android:paddingLeft="12dp"
+                android:textSize="12sp"
+                android:singleLine="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <!-- Main Dynamic TV Board Pane Layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- Category/Group Selection Pane (Left Pane) -->
+            <ListView
+                android:id="@+id/list_categories"
+                android:layout_width="220dp"
+                android:layout_height="match_parent"
+                android:background="#161616"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+                android:choiceMode="singleChoice"
+                android:divider="#222222"
+                android:dividerHeight="1dp" />
+
+            <!-- Channels Listing Pane (Right Pane) -->
+            <ListView
+                android:id="@+id/list_channels"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#1a1a1a"
+                android:padding="4dp"
+                android:scrollbars="vertical"
+                android:divider="#222222"
+                android:dividerHeight="1dp"
+                android:layout_marginLeft="8dp" />
+        </LinearLayout>
+
+        <!-- Footer Bar -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:text="Pavel IPTV Enterprise © 2026 • High Performance Media Stream Terminal"
+            android:textColor="#444444"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+    <!-- Full screen WebView overlay -->
+    <android.webkit.WebView
+        android:id="@+id/webview_iptv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#121212" />
+
+    <!-- Indeterminate Loading Screen Overlay -->
+    <RelativeLayout
+        android:id="@+id/layout_loading_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#121212"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ProgressBar
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:indeterminate="true"
+                android:indeterminateTint="#00E5FF"
+                android:indeterminateTintMode="src_atop" />
+
+            <TextView
+                android:id="@+id/tv_loading_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="LOADING DATA..."
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
+
+            <TextView
+                android:id="@+id/tv_loading_subtext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Optimizing channel buffer handshake"
+                android:textColor="#666666"
+                android:textSize="11sp"
+                android:letterSpacing="0.05" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Error/Offline screen layout overlay -->
+    <LinearLayout
+        android:id="@+id/layout_offline"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#121212"
+        android:padding="24dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚠️"
+            android:textSize="48sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="No Internet Connection"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Please check your Wi-Fi or Ethernet connection.\nThe gateway will automatically reconnect when a network is detected."
+            android:textColor="#AAAAAA"
+            android:textSize="14sp"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/btn_retry"
+            android:layout_width="180dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_selector"
+            android:text="RETRY CONNECT"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+    </LinearLayout>
+
+</FrameLayout>

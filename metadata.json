@@ -1,0 +1,6 @@
+{
+  "name": "PAVEL IPTV ENTERPRISE",
+  "description": "An extremely simple, high-performance, and low-resource Android TV app for Pavel IPTV Enterprise, featuring single-click full-screen streaming gateway.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
