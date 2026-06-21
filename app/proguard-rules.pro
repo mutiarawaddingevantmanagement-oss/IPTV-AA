@@ -5,17 +5,42 @@
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Keep JavascriptInterface annotations and classes used as javascript interfaces
+-keepattributes JavascriptInterface
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Explicitly keep MainActivity's WebAppInterface
+-keep class com.example.MainActivity$WebAppInterface {
+    public *;
+}
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Preserve LineNumberTable and SourceFile properties for better crash recovery logs
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+
+# Optimize WebView and client classes
+-keep public class * extends android.webkit.WebViewClient {
+    public <init>();
+    public *;
+}
+-keep public class * extends android.webkit.WebChromeClient {
+    public <init>();
+    public *;
+}
+
+# Keep the base helper model database class intact
+-keep class com.example.MainActivity$IptvDatabaseHelper {
+    public *;
+}
+-keep class com.example.MainActivity$IptvChannel {
+    public *;
+}
+-keep class com.example.MainActivity$AsyncImageLoader {
+    public *;
+}
+-keep class com.example.MainActivity$ChannelViewHolder {
+    public *;
+}
+

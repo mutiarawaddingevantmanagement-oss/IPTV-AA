@@ -44,33 +44,57 @@
                     android:letterSpacing="0.1" />
             </LinearLayout>
 
-            <!-- Status Indicator -->
-            <TextView
-                android:id="@+id/tv_active_status"
+            <!-- Right Header Controls Pane -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="#1557B0"
-                android:paddingLeft="12dp"
-                android:paddingTop="6dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="6dp"
-                android:text="Default Playlist Active"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:textSize="11sp" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Status Indicator -->
+                <TextView
+                    android:id="@+id/tv_active_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#1557B0"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingRight="12dp"
+                    android:paddingBottom="6dp"
+                    android:text="Default Playlist Active"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="11sp" />
+
+                <!-- Settings Button -->
+                <Button
+                    android:id="@+id/btn_open_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/btn_selector"
+                    android:text="⚙️ SETTINGS"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:focusable="true"
+                    android:nextFocusDown="@+id/edit_search_channel" />
+            </LinearLayout>
         </RelativeLayout>
 
-        <!-- Playlist Picker & Custom URL Rows -->
+        <!-- Playlist Picker & Custom URL Rows (Hidden on Main Menu, Configured via Settings Panel) -->
         <LinearLayout
+            android:id="@+id/layout_playlist_picker_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="#1A1A1A"
             android:padding="8dp"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:visibility="gone">
 
             <!-- Custom URL Input -->
             <EditText
@@ -86,7 +110,9 @@
                 android:textSize="12sp"
                 android:singleLine="true"
                 android:imeOptions="actionDone"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:nextFocusRight="@+id/btn_load_custom"
+                android:nextFocusDown="@+id/edit_search_channel"/>
 
             <Button
                 android:id="@+id/btn_load_custom"
@@ -98,7 +124,10 @@
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:nextFocusLeft="@+id/edit_m3u_url"
+                android:nextFocusRight="@+id/btn_upload_file"
+                android:nextFocusDown="@+id/edit_search_channel"/>
 
             <!-- Separator -->
             <View
@@ -118,7 +147,9 @@
                 android:textColor="#FFFFFF"
                 android:textSize="11sp"
                 android:textStyle="bold"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:nextFocusLeft="@+id/btn_load_custom"
+                android:nextFocusDown="@+id/edit_search_channel"/>
         </LinearLayout>
 
         <!-- Sub-Header/Search row -->
@@ -156,7 +187,10 @@
                 android:paddingLeft="12dp"
                 android:textSize="12sp"
                 android:singleLine="true"
-                android:focusable="true" />
+                android:focusable="true"
+                android:nextFocusUp="@+id/btn_open_settings"
+                android:nextFocusLeft="@+id/list_categories"
+                android:nextFocusDown="@+id/list_channels" />
         </LinearLayout>
 
         <!-- Main Dynamic TV Board Pane Layout -->
@@ -169,14 +203,29 @@
             <!-- Category/Group Selection Pane (Left Pane) -->
             <ListView
                 android:id="@+id/list_categories"
-                android:layout_width="220dp"
+                android:layout_width="160dp"
                 android:layout_height="match_parent"
                 android:background="#161616"
                 android:padding="4dp"
                 android:scrollbars="vertical"
                 android:choiceMode="singleChoice"
                 android:divider="#222222"
-                android:dividerHeight="1dp" />
+                android:dividerHeight="1dp"
+                android:focusable="true"
+                android:nextFocusUp="@+id/edit_search_channel"
+                android:nextFocusDown="@+id/list_categories"
+                android:nextFocusLeft="@+id/list_categories"
+                android:nextFocusRight="@+id/layout_tv_keyboard" />
+
+            <!-- Remote-Friendly Keyboard Panel (Middle Pane) -->
+            <LinearLayout
+                android:id="@+id/layout_tv_keyboard"
+                android:layout_width="265dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#181818"
+                android:padding="6dp"
+                android:layout_marginLeft="8dp" />
 
             <!-- Channels Listing Pane (Right Pane) -->
             <ListView
@@ -189,7 +238,12 @@
                 android:scrollbars="vertical"
                 android:divider="#222222"
                 android:dividerHeight="1dp"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="8dp"
+                android:focusable="true"
+                android:nextFocusUp="@+id/edit_search_channel"
+                android:nextFocusDown="@+id/list_channels"
+                android:nextFocusLeft="@+id/layout_tv_keyboard"
+                android:nextFocusRight="@+id/list_channels" />
         </LinearLayout>
 
         <!-- Footer Bar -->
@@ -304,6 +358,244 @@
             android:textStyle="bold"
             android:focusable="true"
             android:focusableInTouchMode="true" />
+    </LinearLayout>
+
+    <!-- Settings Screen Overlay -->
+    <LinearLayout
+        android:id="@+id/layout_settings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#FA121212"
+        android:padding="32dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚙️ PAWEL IPTV SETTINGS"
+            android:textColor="#00E5FF"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="24dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- Left column: Settings Forms -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <!-- 1. Change Playlist URL Section -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DEFAULT REMOTE M3U PLAYLIST URL"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="20dp">
+
+                    <EditText
+                        android:id="@+id/settings_playlist_url"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="#1E1E1E"
+                        android:hint="Enter remote M3U URL (e.g., https://example.com/live.m3u)..."
+                        android:textColorHint="#555555"
+                        android:textColor="#FFFFFF"
+                        android:paddingLeft="12dp"
+                        android:textSize="13sp"
+                        android:singleLine="true"
+                        android:imeOptions="actionDone"
+                        android:focusable="true"/>
+
+                    <Button
+                        android:id="@+id/btn_settings_save_playlist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="8dp"
+                        android:background="@drawable/btn_selector"
+                        android:text="SAVE &amp; RELOAD"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:focusable="true" />
+                </LinearLayout>
+
+                <!-- 2. Player Buffer Settings -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PLAYER BUFFER ENGINE PROFILE"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="6dp" />
+
+                <RadioGroup
+                    android:id="@+id/settings_buffer_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="24dp">
+
+                    <RadioButton
+                        android:id="@+id/radio_buffer_low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Low Latency (5s Segment)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:buttonTint="#00E5FF"
+                        android:layout_marginRight="16dp"
+                        android:focusable="true"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_buffer_std"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Standard (10s Reliable)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:buttonTint="#00E5FF"
+                        android:layout_marginRight="16dp"
+                        android:focusable="true"/>
+
+                    <RadioButton
+                        android:id="@+id/radio_buffer_safe"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Legacy/Safe Buffer (25s High Recovery)"
+                        android:textColor="#FFFFFF"
+                        android:textSize="13sp"
+                        android:buttonTint="#00E5FF"
+                        android:focusable="true"/>
+                </RadioGroup>
+
+                <!-- 3. Clear Cache Actions -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="STORAGE &amp; HARDWARE MAINTENANCE"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_settings_clear_cache"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/btn_selector"
+                        android:text="⚡ CLEAR WEB VIEW CACHE &amp; MEMORY"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:focusable="true" />
+
+                    <Button
+                        android:id="@+id/btn_settings_reset_db"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:background="@drawable/btn_selector"
+                        android:text="🔄 RESET CACHED CHANNELS DATABASE"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:focusable="true" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Divider -->
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#333333"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp" />
+
+            <!-- Right column: About Box -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical"
+                android:background="#151515"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ABOUT SYSTEM"
+                    android:textColor="#888888"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/settings_app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAVEL IPTV v3.0.0"
+                    android:textColor="#00E5FF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="An Enterprise Ultra Low-Overhead Digital Stream Terminal for Android TV, set-top boxes, and high-DPI environments. Loaded with automated memory recycle keep-alive, SQLite transaction storage, optimized Chromium rendering threads, and real-time network fault detection."
+                    android:textColor="#B0BEC5"
+                    android:textSize="11sp"
+                    android:lineSpacingExtra="4dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Bottom Row: Return / Cancel Buttons -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp">
+
+            <Button
+                android:id="@+id/btn_settings_close"
+                android:layout_width="160dp"
+                android:layout_height="48dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_selector"
+                android:text="CLOSE &amp; EXIT"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:focusable="true" />
+        </RelativeLayout>
+
     </LinearLayout>
 
 </FrameLayout>

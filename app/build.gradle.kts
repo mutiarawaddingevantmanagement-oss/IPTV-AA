@@ -9,7 +9,7 @@ android {
 
   defaultConfig {
     applicationId = "com.aistudio.paveliptventerprise.kiubsw"
-    minSdk = 16
+    minSdk = 21
     targetSdk = 36
     versionCode = 1
     versionName = "1.0"
@@ -35,8 +35,8 @@ android {
 
   buildTypes {
     release {
-      isCrunchPngs = false
-      isMinifyEnabled = false
+      isCrunchPngs = true
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
     }
